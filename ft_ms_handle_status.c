@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 12:19:15 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/12 22:47:38 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/13 18:02:37 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param argv_s 
  * @param v_p 
  */
-void	ft_ms_handle_status(char **argn, char **p, int *f, t_parser_var *v_p)
+void	ft_ms_handle_status(char **argn, char **p, t_parser_var *v_p)
 {
 	char	*txt_s;
 	char	*txt_e;
@@ -33,7 +33,7 @@ void	ft_ms_handle_status(char **argn, char **p, int *f, t_parser_var *v_p)
 	ft_lstadd_back(&(v_p->exec_dyn_lst), ft_lstnew((void *)txt_s));
 	if (*(d + 1 + 1) == 34)
 	{
-		*f = 0;
+		v_p->flag_quote = 0;
 		*p = d + 2;
 	}
 	else

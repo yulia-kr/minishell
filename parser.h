@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 22:53:56 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/11 17:28:55 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/13 17:29:56 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_cmd_exec
 typedef struct s_parser_var
 {
 	t_term_var	v_term;
-	int			flag_handler;
 	char		**dup_argv;
 	char		*str_s;
 	char		*str_e;
@@ -101,6 +100,8 @@ typedef struct s_parser_var
 	int			f_owrite;
 	int			tok;
 	int			flag_debug;
+	int			flag_handler;
+	int			flag_quote;
 	char		*tk_s;
 	char		*tk_e;
 	t_cmd		*cmd_tree;

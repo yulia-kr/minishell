@@ -12,12 +12,13 @@
 
 #include "minishell.h"
 
-static void	ft_set_ptrs(char **p, int len_var_id, int *f, t_parser_var *v_p)
+static void	ft_set_ptrs(char **p, int len_var_id, t_parser_var *v_p)
 {
 	free(v_p->tk_s);
+	v_p->tk_s = NULL;
 	if (*(*p + len_var_id + 1) == 34)
 	{
-		*f = 0;
+		v_p->flag_quote = 0;
 		*p = *p + len_var_id + 1;
 	}
 	else
@@ -57,7 +58,7 @@ static void	ft_on_no_env_var(char **p, int len_v, char **argn, t_parser_var *v)
 	}
 }
 
-void	ft_ms_handle_env_var(char **argn, char **p, int *f, t_parser_var *v_p)
+void	ft_ms_handle_env_var(char **argn, char **p, t_parser_var *v_p)
 {
 	char	*var_id;
 	int		len_var_id;
@@ -72,12 +73,13 @@ void	ft_ms_handle_env_var(char **argn, char **p, int *f, t_parser_var *v_p)
 		{
 			v_p->tk_e = v_p->tk_s + ft_strlen(v_p->tk_s);
 			ft_ms_append_str_to_str(argn, &(v_p->tk_s), &(v_p->tk_e));
-			ft_set_ptrs(p, len_var_id, f, v_p);
+			ft_set_ptrs(p, len_var_id, v_p);
 			break ;
 		}
 		if (ft_on_quote_or_dollar(p, len_var_id, v_p) == 0)
 			break ;
 		free(var_id);
+		var_id = NULL;
 		len_var_id++;
 	}
 	free(var_id);
