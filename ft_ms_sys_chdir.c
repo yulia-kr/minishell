@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:15:14 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/09 22:05:32 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/11 14:28:16 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,27 @@ static int	ft_env_upd_var(char *var_id, char *var_value, t_parser_var *v_p)
 	ft_find_n_rep_var(&env_var_id, env_var, v_p);
 	free(env_var_id);
 	ft_ms_env_upd(v_p);
-	//v_p->status = STATUS_OK;
-	//ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
 	return (0);
+}
+
+static void	ft_upd_pwd_on_env(t_parser_var *v_p, char **var_value, \
+								char **pwd_cur, char **pwd_old)
+{
+	*pwd_cur = getcwd(NULL, MAX_PATH);
+	ft_env_upd_var("PWD", *pwd_cur, v_p);
+	free(*pwd_cur);
+	if (ft_ms_env_get_var(v_p, "OLDPWD", var_value) < 0)
+	{
+		ft_lstadd_back(&(v_p->env_lst), \
+				ft_lstnew((void *)ft_strjoin("OLDPWD=", *pwd_old)));
+		ft_ms_env_upd(v_p);
+	}
+	else
+	{
+		ft_env_upd_var("OLDPWD", *pwd_old, v_p);
+	}
+	free(*var_value);
+	free(*pwd_old);
 }
 
 /**
@@ -75,21 +93,7 @@ static int	ft_chdir_on_parent(char **argv, t_parser_var *v_p)
 		ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
 		return (-1);
 	}
-	pwd_cur = getcwd(NULL, MAX_PATH);
-	ft_env_upd_var("PWD", pwd_cur, v_p);
-	free(pwd_cur);
-	if (ft_ms_env_get_var(v_p, "OLDPWD", &var_value) < 0)
-	{
-		ft_lstadd_back(&(v_p->env_lst), \
-				ft_lstnew((void *)ft_strjoin("OLDPWD=", pwd_old)));
-		ft_ms_env_upd(v_p);
-	}
-	else
-	{
-		ft_env_upd_var("OLDPWD", pwd_old, v_p);
-	}
-	free(var_value);
-	free(pwd_old);
+	ft_upd_pwd_on_env(v_p, &var_value, &pwd_cur, &pwd_old);
 	ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
 	v_p->status = STATUS_OK;
 	return (0);
@@ -118,7 +122,7 @@ int	ft_ms_sys_chdir(t_cmd *cmd, t_parser_var *v_p)
 	}
 	if (ft_ms_strcmp((cmd_exec->argv_s)[0], "cd") != 0)
 		return (1);
-    v_p->flag_handler = 0;
+	v_p->flag_handler = 0;
 	if (v_p->pid == 0)
 	{
 		ft_ms_free_rsc(v_p, FREE_ON_EXIT);

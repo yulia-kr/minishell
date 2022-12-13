@@ -6,25 +6,28 @@
 #    By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 15:08:09 by cudoh             #+#    #+#              #
-#    Updated: 2022/12/08 19:48:14 by cudoh            ###   ########.fr        #
+#    Updated: 2022/12/12 20:53:33 by cudoh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #SRCS:= $(shell ls *.c | grep -v lst | xargs)
 
-SRCS:= main.c ft_ms_env_get_path_dirs.c ft_exec_cmd.c ft_ms_sys_open_fd.c \
+SRCS:= main.c ft_ms_env_get_path_dirs.c ft_ms_sys_open_fd.c \
 				ft_ms_sys_chdir.c ft_ms_sys_exit.c ft_ms_sys_env.c \
 				ft_ms_sys_export.c ft_ms_sys_pwd.c ft_ms_sys_unset.c \
 				ft_ms_sys_echo.c \
 				\
-				ft_ms_run_cmd.c  ft_ms_cmd_exec.c \
+				ft_ms_run_cmd.c  ft_ms_cmd_exec.c ft_ms_var_id_n_env_var.c \
 				ft_ms_cmd_pipe.c  ft_ms_cmd_list.c ft_ms_cmd_redir.c \
 				ft_ms_find_prog.c ft_ms_handle_status.c ft_ms_handle_sig.c \
 				ft_ms_chk_quote.c ft_ms_handle_quotes_n_dollar.c \
+				ft_ms_handle_env_var.c \
 				ft_ms_env_lst_init.c ft_ms_env_get_var.c ft_ms_env_upd.c \
 				ft_ms_env_lst_to_arr_ptr.c ft_ms_free_ptr_to_arrs.c\
 				ft_ms_free_lst.c ft_ms_free_rsc.c ft_ms_debug_print_cmd.c \
 				ft_ms_dup_ptr_to_arr.c ft_ms_strcmp.c ft_ms_rst_free_ptr_to_arr.c \
+				ft_ms_sys_call_parent.c ft_ms_sys_call_child.c ft_ms_prompt_usr.c \
+				ft_ms_parse_usr_cmd.c ft_ms_append_str_to_str.c \
 				\
 		parser.c ft_parser_init_var.c   ft_parser_get_max_args.c \
 				 ft_parser_get_token.c  ft_parser_peek.c ft_parser_parse.c \

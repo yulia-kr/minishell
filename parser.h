@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 22:53:56 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/09 21:19:13 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/11 17:28:55 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ int		ft_parser_get_max_args(t_parser_var *v_p);
 t_cmd	*ft_parser_init_cmd_pipe(t_cmd *left, t_cmd *right);
 t_cmd	*ft_parser_init_cmd_list(t_cmd *left, t_cmd *right);
 t_cmd	*ft_parser_init_cmd_exec(t_parser_var *v_p);
-t_cmd	*ft_parser_init_cmd_redir(t_cmd *subcmd, char *f_s, char *f_e, \
-						int f_m, int f_fd);
+t_cmd	*ft_parser_init_cmd_redir(t_cmd *subcmd, t_parser_var *v, \
+									int f_m, int f_fd);
 int		ft_parser_peek(char **str_s, char *str_e, char *tk);
 int		ft_parser_get_token(char **str_s, char *str_e, \
 						char **tk_s, char **tk_e);

@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:07:02 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/10 14:05:51 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/11 13:51:33 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_cmd	*ft_parser_parse_pipe(char **str_s, char *str_e, t_parser_var *v)
 	if (ft_parser_peek(str_s, str_e, "|"))
 	{
 		ft_parser_get_token(str_s, str_e, 0, 0);
-		cmd = ft_parser_init_cmd_pipe(cmd,
-									  ft_parser_parse_pipe(str_s, str_e, v));
+		cmd = ft_parser_init_cmd_pipe(cmd, \
+									ft_parser_parse_pipe(str_s, str_e, v));
 	}
 	return (cmd);
 }

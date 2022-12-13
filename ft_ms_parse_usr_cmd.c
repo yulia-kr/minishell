@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ms_rst_free_ptr_to_arr.c                        :+:      :+:    :+:   */
+/*   ft_ms_parse_usr_cmd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 19:42:15 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/08 19:42:15 by cudoh            ###   ########.fr       */
+/*   Created: 2022/12/11 16:40:21 by cudoh             #+#    #+#             */
+/*   Updated: 2022/12/11 16:40:21 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_ms_rst_free_ptr_to_arr(char ***arr)
+int	ft_ms_parse_usr_cmd(t_parser_var *v_p)
 {
-	int		idx;
-	char	**ptr_arr;
-
-	idx = 0;
-	ptr_arr = *arr;
-	if (ptr_arr == NULL)
-		return ;
-	while (ptr_arr[idx] != NULL)
+	ft_parser_get_max_args(v_p);
+	add_history(v_p->usr_cmd_inp);
+	v_p->cmd_tree = ft_parser_parse(v_p->usr_cmd_inp, v_p);
+	if (*(v_p->cmd_tree) == P_ERROR)
 	{
-		ptr_arr[idx] = NULL;
-		idx++;
+		free(v_p->cmd_tree);
+		v_p->cmd_tree = NULL;
+		ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
+		return (-1);
 	}
-	free(ptr_arr);
-	ptr_arr = NULL;
+	return (0);
 }

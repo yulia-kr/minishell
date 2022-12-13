@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser_null_term.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 20:32:30 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/06 10:35:18 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2022/12/11 11:00:48 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	ft_null_term_exec(t_cmd *cmd)
+{
+	int			i;
+	t_cmd_exec	*exec_cmd;
+
+	i = 0;
+	exec_cmd = (t_cmd_exec *)cmd;
+	while (((exec_cmd->argv_e)[i]) != 0)
+	{
+		if (*((exec_cmd->argv_e)[i]) != 0)
+			(*((exec_cmd->argv_e)[i]) = '\0');
+		i++;
+	}
+}
 
 /**
  * @brief 	This function null terminates the all the string args at 
@@ -46,22 +61,13 @@ static void	ft_null_term_pipe_list(t_cmd **cmd)
  */
 t_cmd	*ft_parser_null_term(t_cmd *cmd)
 {
-	int			i;
-	t_cmd_exec	*exec_cmd;
 	t_cmd_redir	*redir_cmd;
 
-	i = 0;
 	if (cmd == 0)
 		return (0);
 	if (*cmd == EXEC)
 	{
-		exec_cmd = (t_cmd_exec *)cmd;
-		while (((exec_cmd->argv_e)[i]) != 0)
-		{
-			if (*((exec_cmd->argv_e)[i]) != 0)
-				(*((exec_cmd->argv_e)[i]) = '\0');
-			i++;
-		}
+		ft_null_term_exec(cmd);
 	}
 	else if (*cmd == REDIR)
 	{

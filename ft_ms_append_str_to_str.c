@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ms_rst_free_ptr_to_arr.c                        :+:      :+:    :+:   */
+/*   ft_ms_append_str_to_str.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 19:42:15 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/08 19:42:15 by cudoh            ###   ########.fr       */
+/*   Created: 2022/12/11 17:56:50 by cudoh             #+#    #+#             */
+/*   Updated: 2022/12/11 17:56:50 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stddef.h>
+#include "libft/libft.h"
 
-void	ft_ms_rst_free_ptr_to_arr(char ***arr)
+int	ft_ms_append_str_to_str(char **str, char **txt_s, char **txt_e)
 {
-	int		idx;
-	char	**ptr_arr;
+	size_t	len_str;
+	char	*txt;
+	char	*str_tmp;
 
-	idx = 0;
-	ptr_arr = *arr;
-	if (ptr_arr == NULL)
-		return ;
-	while (ptr_arr[idx] != NULL)
+	len_str = *txt_e - *txt_s;
+	txt = ft_calloc((len_str + 1), sizeof(char));
+	ft_memcpy(txt, *txt_s, len_str);
+	if (*str == NULL)
 	{
-		ptr_arr[idx] = NULL;
-		idx++;
+		*str = txt;
 	}
-	free(ptr_arr);
-	ptr_arr = NULL;
+	else
+	{
+		str_tmp = *str;
+		*str = ft_strjoin(str_tmp, txt);
+		free(str_tmp);
+		free(txt);
+	}
+	return (0);
 }

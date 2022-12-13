@@ -64,7 +64,7 @@ static int	ft_is_var_valid__chk_char(char *var, t_parser_var *v_p)
  * 			list and returns 0 on success.
  *          else -1 is returned.
  * 
- * @param var       This contains both the var id and var value. eg. WEEDAY=SUNDAY
+ * @param var       This contains both the var id and var value. eg. WKDAY=SUN
  * @param v_p 
  * @return int 
  */
@@ -126,15 +126,31 @@ static int	ft_unset_on_parent(char *var, t_parser_var *v_p)
  * 
  * @param v_p 
  */
-static void	ft_unset_on_child(t_parser_var *v_p)
+static int	ft_unset(t_parser_var *v, t_cmd_exec *cmd_exec)
 {
-	ft_ms_free_rsc(v_p, FREE_ON_EXIT);
-	exit(0);
+	char		*var;
+
+	if (v->pid == 0)
+	{
+		ft_ms_free_rsc(v, FREE_ON_EXIT);
+		exit(0);
+	}
+	if ((cmd_exec->argv_s)[1] != NULL)
+	{
+		var = (cmd_exec->argv_s)[1];
+		if (ft_unset_on_parent(var, v) < 0)
+			return (-1);
+	}
+	else
+	{
+		v->status = STATUS_OK;
+		ft_ms_free_rsc(v, FREE_ON_CMD_EXEC);
+	}
+	return (0);
 }
 
 int	ft_ms_sys_unset(t_cmd *cmd, t_parser_var *v)
 {
-	char		*var;
 	t_cmd_exec	*cmd_exec;
 
 	if (*(cmd) != EXEC)
@@ -150,17 +166,7 @@ int	ft_ms_sys_unset(t_cmd *cmd, t_parser_var *v)
 	if (ft_ms_strcmp((cmd_exec->argv_s)[0], "unset") != 0)
 		return (1);
 	v->flag_handler = 0;
-	if ((cmd_exec->argv_s)[1] == NULL)
-	{
-		if (v->pid == 0)
-			ft_unset_on_child(v);
-		v->status = STATUS_OK;
-		ft_ms_free_rsc(v, FREE_ON_CMD_EXEC);
-	}
-	var = (cmd_exec->argv_s)[1];
-	if (v->pid == 0)
-		ft_unset_on_child(v);
-	if (ft_unset_on_parent(var, v) < 0)
+	if (ft_unset(v, cmd_exec) < 0)
 		return (-1);
 	return (0);
 }

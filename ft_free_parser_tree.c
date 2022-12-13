@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 20:32:30 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/10 13:12:10 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/11 13:46:44 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
  */
 static void	ft_free_parser_pipe(t_cmd **cmd)
 {
-
 	t_cmd_pipe	*pipe_cmd;
+
 	if ((**cmd) == PIPE)
 	{
 		pipe_cmd = (t_cmd_pipe *)(*cmd);
@@ -67,5 +67,4 @@ void	ft_free_parser_tree(t_cmd *cmd)
 	}
 	else
 		ft_free_parser_pipe(&cmd);
-	//return (cmd);
 }

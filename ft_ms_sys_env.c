@@ -12,6 +12,26 @@
 
 #include "minishell.h"
 
+static int	ft_env(t_parser_var *v, t_cmd_exec *cmd_exec)
+{
+	int	idx;
+
+	idx = 0;
+	if (cmd_exec->argv_s[1] != NULL)
+	{
+		ft_printf("Error! - (env) : no option or argument required\n");
+		v->status = STATUS_ERROR_OPTION;
+		ft_ms_free_rsc(v, FREE_ON_EXIT);
+		exit(1);
+	}
+	while ((v->env)[idx] != NULL)
+	{
+		ft_printf("%s\n", (v->env)[idx]);
+		idx++;
+	}
+	return (0);
+}
+
 /**
  * @brief 	This function prints all the system environment variables.
  * 
@@ -19,10 +39,8 @@
  */
 int	ft_ms_sys_env(t_cmd *cmd, t_parser_var *v_p)
 {
-	int			idx;
 	t_cmd_exec	*cmd_exec;
 
-	idx = 0;
 	cmd_exec = (t_cmd_exec *)(cmd);
 	if (*(cmd) != EXEC)
 		return (1);
@@ -34,17 +52,6 @@ int	ft_ms_sys_env(t_cmd *cmd, t_parser_var *v_p)
 	if (ft_ms_strcmp((cmd_exec->argv_s)[0], "env") != 0)
 		return (1);
 	v_p->flag_handler = 0;
-	if (cmd_exec->argv_s[1] != NULL)
-	{
-		ft_printf("Error! - (env) : no option or argument required\n");
-		v_p->status = STATUS_ERROR_OPTION;
-		ft_ms_free_rsc(v_p, FREE_ON_EXIT);
-		exit(127);
-	}
-	while ((v_p->env)[idx] != NULL)
-	{
-		ft_printf("%s\n", (v_p->env)[idx]);
-		idx++;
-	}
+	ft_env(v_p, cmd_exec);
 	return (0);
 }

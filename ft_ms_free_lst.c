@@ -31,7 +31,6 @@ static void	ft_lst_del_node(void *adr)
 		else
 			free(adr);
 		adr = NULL;
-		
 	}
 }
 

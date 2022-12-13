@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 23:22:39 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/06 10:50:19 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2022/12/11 17:29:50 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ t_cmd	*ft_parser_init_cmd_exec(t_parser_var *v_p)
 	return ((t_cmd *)cmd);
 }
 
-t_cmd	*ft_parser_init_cmd_redir(t_cmd *subcmd, char *f_s, char *f_e, \
+/**
+ * @brief   
+ * 
+ */
+t_cmd	*ft_parser_init_cmd_redir(t_cmd *subcmd, t_parser_var *v, \
 									int f_m, int f_fd)
 {
 	t_cmd_redir	*cmd;
@@ -59,9 +63,9 @@ t_cmd	*ft_parser_init_cmd_redir(t_cmd *subcmd, char *f_s, char *f_e, \
 	cmd = ft_calloc(sizeof(*cmd), 1);
 	cmd->cmd_type = REDIR;
 	cmd->file_mode = f_m;
-	cmd->file_s = f_s;
-	cmd->file_e = f_e;
-	cmd->file_fd = f_fd; // 0 stdin, 1 stdout
+	cmd->file_s = v->tk_s;
+	cmd->file_e = v->tk_e;
+	cmd->file_fd = f_fd;
 	cmd->cmd = subcmd;
 	return ((t_cmd *)cmd);
 }

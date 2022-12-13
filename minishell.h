@@ -31,11 +31,13 @@
 # define TERM_CONFIG_DEFAULT (0)
 # define TERM_CONFIG_CUSTOM (1)
 # define STATUS_ERROR_OPTION (2)
-# define STATUS_ERROR_CMD (254)
+# define STATUS_ERROR_SYNTAX (2)
+# define STATUS_ERROR_CMD (127)
 # define STATUS_OK (0)
 # define STATUS_ERROR_INVALID_ID (1)
 # define PPID (1000)
 # define SZ_CHAR (1)
+# define MS_TRUE (1)
 # define NULL_BYTE (1)
 # define ASCII_ALPHA_S ("abcdefghijklmnopqrstuvwxyz")
 # define ASCII_ALPHA_B ("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -62,7 +64,8 @@ int		ft_ms_sys_export(t_cmd *cmd, t_parser_var *v_p);
 int		ft_ms_sys_pwd(t_cmd *cmd, t_parser_var *v);
 int		ft_ms_sys_unset(t_cmd *cmd, t_parser_var *v);
 int		ft_ms_sys_echo(t_cmd *cmd, t_parser_var *v);
-void	ft_ms_handle_status(char **argv_s, t_parser_var *v_p);
+void	ft_ms_handle_status(char **argn, char **p, int *f, t_parser_var *v_p);
+void	ft_ms_handle_env_var(char **argn, char **p, int *f, t_parser_var *v_p);
 void	ft_ms_handle_sig(int sig_val);
 void	ft_ms_handle_quotes_n_dollar(char **argv_s, t_parser_var *v_p);
 int		ft_ms_chk_quote(char **usr_inp);
@@ -75,4 +78,10 @@ void	ft_ms_free_rsc(t_parser_var *v, t_option_free option);
 void	ft_ms_debug_print_cmd(char *usr_cmd);
 int		ft_ms_dup_ptr_to_arr(char **ptr_arr, char ***dup_ptr_arr);
 int		ft_ms_strcmp(char *s1, char *s2);
+int		ft_ms_var_id_n_env_var(char **var_id, char *var, t_parser_var *v_p);
+int		ft_ms_sys_call_parent(t_parser_var *v_p);
+void	ft_ms_sys_call_child(t_parser_var *v_p);
+int		ft_ms_prompt_usr(t_parser_var *v_p, int argc, char **argv);
+int		ft_ms_parse_usr_cmd(t_parser_var *v_p);
+int		ft_ms_append_str_to_str(char **str, char **txt_s, char **txt_e);
 #endif

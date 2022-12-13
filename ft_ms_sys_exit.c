@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 10:55:50 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/09 20:20:33 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/11 16:58:04 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_ms_sys_exit(t_cmd *cmd, t_parser_var *v_p)
 	}
 	if (ft_ms_strcmp((cmd_exec->argv_s)[0], "exit") != 0)
 		return (1);
-    v_p->flag_handler = 0;
+	v_p->flag_handler = 0;
 	ft_ms_free_rsc(v_p, FREE_ON_EXIT);
 	exit(0);
 	return (0);
