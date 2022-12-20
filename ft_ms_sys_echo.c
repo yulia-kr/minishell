@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 12:39:35 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/11 12:56:42 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/13 22:57:50 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_echo(t_cmd_exec *cmd_exec)
 		check_n = 1;
 		i++;
 	}
-	while ((cmd_exec->argv_s)[i])
+	while ((cmd_exec->argv_s)[i] != NULL)
 	{
 		ft_printf("%s", (cmd_exec->argv_s)[i]);
 		if ((cmd_exec->argv_s)[i + 1] != NULL)

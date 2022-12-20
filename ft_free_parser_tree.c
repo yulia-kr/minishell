@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 20:32:30 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/11 13:46:44 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/17 11:56:30 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_free_parser_tree(t_cmd *cmd)
 	t_cmd_exec	*exec_cmd;
 	t_cmd_redir	*redir_cmd;
 
-	if (cmd == 0)
+	if (cmd == 0 || cmd == NULL || *cmd == P_ERROR)
 		return ;
 	if (*cmd == EXEC)
 	{

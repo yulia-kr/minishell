@@ -79,7 +79,7 @@ static int	ft_is_var_valid(char **var_id, char *var, t_parser_var *v_p)
 	{
 		ft_printf("Usage : No option required but argument is required\n");
 		v_p->status = STATUS_ERROR_OPTION;
-		ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
+		//ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
 		return (-1);
 	}
 	if (ft_is_var_valid__chk_char(&s, v_p) < 0)
@@ -88,7 +88,7 @@ static int	ft_is_var_valid(char **var_id, char *var, t_parser_var *v_p)
 	{
 		ft_printf("Error! : Invalid variable format\n");
 		v_p->status = STATUS_ERROR_OPTION;
-		ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
+		//ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
 		return (-1);
 	}
 	*var_id = (char *)ft_calloc(((s - var + 1) + NULL_BYTE), SZ_CHAR);
@@ -130,19 +130,28 @@ static void	ft_export_on_child(t_cmd_exec *cmd_exec, t_parser_var *v_p)
 	exit(0);
 }
 
-static int	ft_export_on_parent(char **var_id, char *var, t_parser_var *v_p)
+static int	ft_export_on_parent(t_cmd_exec *cmd_exec, t_parser_var *v_p)
 {
-	char	*var_n;
+	char	*var;
+	char	*var_id;
+	int		idx;
 
-	if (ft_is_var_valid(var_id, var, v_p) < 0)
-		return (-1);
-	if (ft_ms_var_id_n_env_var(var_id, var, v_p) == 0)
-		return (0);
-	var_n = ft_calloc((ft_strlen(var) + 1), SZ_CHAR);
-	ft_memcpy((void *)var_n, (void *)var, ft_strlen(var));
-	ft_lstadd_back(&(v_p->env_lst), ft_lstnew((void *)var_n));
-	ft_ms_env_upd(v_p);
-	v_p->status = STATUS_OK;
+	idx = 1;
+	while (MS_TRUE)
+	{
+		if (cmd_exec->argv_s[idx] == NULL)
+			break ;
+		var = (cmd_exec->argv_s)[idx];
+		if ((ft_is_var_valid(&var_id, var, v_p) < 0) || \
+			(ft_ms_var_id_n_env_var(&var_id, var, v_p) == 0))
+		{
+			idx++;
+			continue ;
+		}
+		ft_ms_env_add_var(v_p, var);
+		v_p->status = STATUS_OK;
+		idx++;
+	}
 	ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
 	return (0);
 }
@@ -166,8 +175,6 @@ static int	ft_export_on_parent(char **var_id, char *var, t_parser_var *v_p)
  */
 int	ft_ms_sys_export(t_cmd *cmd, t_parser_var *v_p)
 {
-	char		*var;
-	char		*var_id;
 	t_cmd_exec	*cmd_exec;
 
 	if (*(cmd) != EXEC)
@@ -175,7 +182,6 @@ int	ft_ms_sys_export(t_cmd *cmd, t_parser_var *v_p)
 	cmd_exec = (t_cmd_exec *)(cmd);
 	if ((cmd_exec->argv_s)[0] == 0)
 		return (-1);
-	var = (cmd_exec->argv_s)[1];
 	if (v_p->flag_handler == 0)
 	{
 		ft_ms_handle_quotes_n_dollar(cmd_exec->argv_s, v_p);
@@ -186,7 +192,7 @@ int	ft_ms_sys_export(t_cmd *cmd, t_parser_var *v_p)
 	v_p->flag_handler = 0;
 	if (v_p->pid == 0)
 		ft_export_on_child(cmd_exec, v_p);
-	if (ft_export_on_parent(&var_id, var, v_p) < 0)
+	if (ft_export_on_parent(cmd_exec, v_p) == 0 && v_p->status != STATUS_OK)
 		return (-1);
 	return (0);
 }

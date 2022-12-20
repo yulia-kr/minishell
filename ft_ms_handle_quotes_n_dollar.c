@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:33:08 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/13 18:13:31 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/18 11:51:38 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,21 @@ static void	ft_handle_dollar_n_dquote(char **argv, char **s, \
 	char	*tmp_str;
 
 	tmp_str = NULL;
+	v_p->rc = 0;
 	if (*(*s + 1) == '?')
 		ft_ms_handle_status(argv, s, v_p);
 	else if (*(*s + 1) == '$')
 	{
 		tmp_str = *argv;
 		if (tmp_str == 0 || tmp_str == NULL)
-			*argv = ft_strjoin("", "$");
+			*argv = ft_strjoin("", "$$");
 		else
-			*argv = ft_strjoin(tmp_str, "$");
+			*argv = ft_strjoin(tmp_str, "$$");
 		free(tmp_str);
 		tmp_str = NULL;
-		v_p->tk_s = (*s) + 1;
-		v_p->str_s = (*s) + 1;
+		v_p->tk_s = (*s) + 2;
+		v_p->str_s = (*s) + 2;
+		*s = *s + 1;
 	}
 	else
 		ft_ms_handle_env_var(argv, s, v_p);
@@ -117,7 +119,7 @@ void	ft_ms_handle_quotes_n_dollar(char **argv_s, t_parser_var *v_p)
 	idx = 0;
 	v_p->flag_quote = 0;
 	quote = 0;
-	while (argv_s[idx] != 0)
+	while (argv_s[idx] != 0 && (ft_strlen(argv_s[idx]) > 0))
 	{
 		ft_handle_dollar_n_quote(&argv_s[idx], &quote, v_p);
 		idx++;

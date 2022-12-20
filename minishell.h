@@ -49,6 +49,7 @@ int		ft_ms_env_get_path_dirs(t_parser_var *v_p, char ***env_path_dirs);
 int		ft_ms_env_lst_to_arr_ptr(t_list **env_lst, char ***env_arr);
 int		ft_ms_env_get_var(t_parser_var *v_p, char *var_key, char **var_value);
 void	ft_ms_env_upd(t_parser_var *v_p);
+void	ft_ms_env_add_var(t_parser_var *v, char *var);
 int		ft_exec_cmd(void);
 int		ft_ms_run_cmd(t_cmd *cmd, t_parser_var *v_p);	
 void	ft_ms_cmd_exec(t_cmd *cmd, t_parser_var *v_p);	

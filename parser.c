@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 23:22:39 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/11 17:29:50 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/18 12:51:20 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,15 @@ t_cmd	*ft_parser_init_cmd_redir(t_cmd *subcmd, t_parser_var *v, \
 	cmd->file_s = v->tk_s;
 	cmd->file_e = v->tk_e;
 	cmd->file_fd = f_fd;
-	cmd->cmd = subcmd;
+	if (*subcmd == REDIR)
+	{
+		cmd->cmd = ((t_cmd_redir *)subcmd)->cmd;
+		((t_cmd_redir *)subcmd)->cmd = (t_cmd *)cmd;
+		return (subcmd);
+	}
+	else
+	{
+		cmd->cmd = subcmd;
+	}
 	return ((t_cmd *)cmd);
 }

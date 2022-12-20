@@ -28,6 +28,7 @@ int	main(int argc, char *argv[], char *envp[])
 				continue ;
 			if (ft_ms_sys_call_parent(&v_p) != 1)
 				continue ;
+			//ft_ms_run_cmd(v_p.cmd_tree, &v_p);			//
 			ft_ms_sys_call_child(&v_p);
 		}
 		v_p.flag_handler = 0;

@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 22:37:03 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/11 09:49:06 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/17 14:07:36 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static void	ft_free_on_cmd_exec(t_parser_var *v)
 	ft_ms_free_lst(&(v->exec_dyn_lst));
 	free(v->usr_cmd_inp);
 	free(v->prog_path);
-	ft_free_parser_tree(v->cmd_tree);
+	if (v->str_len > 0)
+		ft_free_parser_tree(v->cmd_tree);
 	v->usr_cmd_inp = NULL;
 	v->prog_path = NULL;
 }

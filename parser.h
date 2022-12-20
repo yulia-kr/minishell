@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 22:53:56 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/13 17:29:56 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/18 10:35:26 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include "libft/libft.h"
-//# include "minishell.h"
 
 typedef struct s_term
 {

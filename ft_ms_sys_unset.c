@@ -86,7 +86,6 @@ static int	ft_is_var_id_n_env_var(char *var, t_parser_var *v_p)
 			free(head);
 			ft_ms_env_upd(v_p);
 			v_p->status = STATUS_OK;
-			ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
 			free(var_id);
 			return (0);
 		}
@@ -112,8 +111,6 @@ static int	ft_unset_on_parent(char *var, t_parser_var *v_p)
 		return (-1);
 	if (ft_is_var_id_n_env_var(var, v_p) == 0)
 		return (0);
-	v_p->status = STATUS_OK;
-	ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
 	return (0);
 }
 
@@ -128,24 +125,25 @@ static int	ft_unset_on_parent(char *var, t_parser_var *v_p)
  */
 static int	ft_unset(t_parser_var *v, t_cmd_exec *cmd_exec)
 {
-	char		*var;
+	char	*var;
+	int		idx;
 
+	idx = 1;
 	if (v->pid == 0)
 	{
 		ft_ms_free_rsc(v, FREE_ON_EXIT);
 		exit(0);
 	}
-	if ((cmd_exec->argv_s)[1] != NULL)
+	var = (cmd_exec->argv_s)[idx];
+	while (var != NULL)
 	{
-		var = (cmd_exec->argv_s)[1];
 		if (ft_unset_on_parent(var, v) < 0)
 			return (-1);
+		idx++;
+		var = (cmd_exec->argv_s)[idx];
 	}
-	else
-	{
-		v->status = STATUS_OK;
-		ft_ms_free_rsc(v, FREE_ON_CMD_EXEC);
-	}
+	v->status = STATUS_OK;
+	ft_ms_free_rsc(v, FREE_ON_CMD_EXEC);
 	return (0);
 }
 

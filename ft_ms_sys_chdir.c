@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 22:15:14 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/11 14:28:16 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/13 22:45:05 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,19 @@ static int	ft_env_upd_var(char *var_id, char *var_value, t_parser_var *v_p)
 static void	ft_upd_pwd_on_env(t_parser_var *v_p, char **var_value, \
 								char **pwd_cur, char **pwd_old)
 {
+	char	*tmp;
+
+	tmp = NULL;
 	*pwd_cur = getcwd(NULL, MAX_PATH);
 	ft_env_upd_var("PWD", *pwd_cur, v_p);
 	free(*pwd_cur);
 	if (ft_ms_env_get_var(v_p, "OLDPWD", var_value) < 0)
 	{
+		tmp = *pwd_old;
 		ft_lstadd_back(&(v_p->env_lst), \
-				ft_lstnew((void *)ft_strjoin("OLDPWD=", *pwd_old)));
+				ft_lstnew((void *)ft_strjoin("OLDPWD=", tmp)));
+		free(*pwd_old);
+		*pwd_old = NULL;
 		ft_ms_env_upd(v_p);
 	}
 	else

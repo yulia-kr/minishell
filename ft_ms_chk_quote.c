@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 18:41:23 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/06 21:34:39 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/17 16:23:30 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static int	ft_recurs_cmd_inp(char **usr_inp)
 
 	status = 0;
 	recurs_inp = NULL;
-	usr_inp_tmp = ft_strdup(*usr_inp);
+	usr_inp_tmp = ft_strjoin(*usr_inp, "\n");
 	while (recurs_inp == NULL)
 	{
 		rl_replace_line("", 0);

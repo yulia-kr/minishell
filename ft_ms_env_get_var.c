@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+static void	ft_handle_null_value(char **split_res, char **var_value)
+{
+	size_t	len_value_str;
+
+	
+	if (split_res[1] == NULL)
+	{
+		*var_value = (char *)ft_calloc(1 + NULL_BYTE, SZ_CHAR);
+		**var_value = '\0';
+
+	}
+	else
+	{
+		len_value_str = ft_strlen(split_res[1]);
+		*var_value = (char *)ft_calloc(len_value_str + NULL_BYTE, SZ_CHAR);
+		ft_memcpy(*var_value, split_res[1], len_value_str);
+	}
+}
+
 /**
  * @brief 	This function fetches the environment variable value
  * 			based on the given key.
@@ -48,8 +67,7 @@ int	ft_ms_env_get_var(t_parser_var *v_p, char *var_key, char **var_value)
 						(env[idx][len_str] == '='))
 		{
 			split_str = ft_split(env[idx], '=');
-			*var_value = (char *)ft_calloc(ft_strlen(split_str[1]) + 1, 1);
-			ft_memcpy(*var_value, split_str[1], ft_strlen(split_str[1]));
+			ft_handle_null_value(split_str, var_value);
 			ft_ms_free_ptr_to_arrs(&split_str);
 			return (0);
 		}
@@ -57,3 +75,4 @@ int	ft_ms_env_get_var(t_parser_var *v_p, char *var_key, char **var_value)
 	}
 	return (-1);
 }
+

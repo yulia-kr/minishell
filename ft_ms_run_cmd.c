@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ms_run_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykruhlyk <ykruhlyk@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 22:15:24 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/06 09:52:04 by ykruhlyk         ###   ########.fr       */
+/*   Updated: 2022/12/17 17:33:44 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_ms_run_cmd(t_cmd *cmd, t_parser_var *v_p)
 	else if (*cmd == PIPE)
 		ft_ms_cmd_pipe(cmd, v_p);
 	else
-		rc = ft_printf("Error!\n");
+		rc = ft_printf("Error! invalid syntax\n");
 	exit(1);
 	return (rc);
 }
