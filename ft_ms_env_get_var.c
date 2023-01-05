@@ -16,12 +16,10 @@ static void	ft_handle_null_value(char **split_res, char **var_value)
 {
 	size_t	len_value_str;
 
-	
 	if (split_res[1] == NULL)
 	{
 		*var_value = (char *)ft_calloc(1 + NULL_BYTE, SZ_CHAR);
 		**var_value = '\0';
-
 	}
 	else
 	{
@@ -75,4 +73,3 @@ int	ft_ms_env_get_var(t_parser_var *v_p, char *var_key, char **var_value)
 	}
 	return (-1);
 }
-

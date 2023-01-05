@@ -26,7 +26,8 @@ static int	ft_env(t_parser_var *v, t_cmd_exec *cmd_exec)
 	}
 	while ((v->env)[idx] != NULL)
 	{
-		ft_printf("%s\n", (v->env)[idx]);
+		if (ft_strchr(((v->env)[idx]), '='))
+			ft_printf("%s\n", (v->env)[idx]);
 		idx++;
 	}
 	return (0);

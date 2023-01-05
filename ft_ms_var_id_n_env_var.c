@@ -40,7 +40,6 @@ int	ft_ms_var_id_n_env_var(char **var_id, char *var, t_parser_var *v_p)
 			head->content = (void *)var_n;
 			ft_ms_env_upd(v_p);
 			v_p->status = STATUS_OK;
-			//ft_ms_free_rsc(v_p, FREE_ON_CMD_EXEC);
 			return (0);
 		}
 		head = head->next;

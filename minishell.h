@@ -50,6 +50,7 @@ int		ft_ms_env_lst_to_arr_ptr(t_list **env_lst, char ***env_arr);
 int		ft_ms_env_get_var(t_parser_var *v_p, char *var_key, char **var_value);
 void	ft_ms_env_upd(t_parser_var *v_p);
 void	ft_ms_env_add_var(t_parser_var *v, char *var);
+int		ft_ms_env_arr_sort(t_parser_var *v);
 int		ft_exec_cmd(void);
 int		ft_ms_run_cmd(t_cmd *cmd, t_parser_var *v_p);	
 void	ft_ms_cmd_exec(t_cmd *cmd, t_parser_var *v_p);	
@@ -85,4 +86,6 @@ void	ft_ms_sys_call_child(t_parser_var *v_p);
 int		ft_ms_prompt_usr(t_parser_var *v_p, int argc, char **argv);
 int		ft_ms_parse_usr_cmd(t_parser_var *v_p);
 int		ft_ms_append_str_to_str(char **str, char **txt_s, char **txt_e);
+int		ft_ms_export_on_parent(t_cmd_exec *cmd_exec, t_parser_var *v_p, \
+								int (*f)(t_parser_var *));
 #endif

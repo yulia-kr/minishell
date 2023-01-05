@@ -102,14 +102,15 @@ static void	ft_on_no_env_var(char **d, int len_v, char **argn, t_parser_var *v)
 	ch_e = NULL;
 	if ((v->rc) == 0)
 	{
-		ch_s = ft_strjoin("\0","\0");
+		ch_s = ft_strjoin("\0", "\0");
 		ch_e = ch_s + ft_strlen(ch_s);
 		ft_ms_append_str_to_str(argn, &ch_s, &ch_e);
+		ft_lstadd_back(&(v->exec_dyn_lst), ft_lstnew((void *)ch_s));
+		v->tk_s = *d + len_v;
 	}
 	if ((*d + len_v) == v->str_e)
 		v->str_s = v->str_e;
 }
-
 
 void	ft_ms_handle_env_var(char **argn, char **p, t_parser_var *v_p)
 {

@@ -6,31 +6,77 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 12:39:35 by cudoh             #+#    #+#             */
-/*   Updated: 2022/12/13 22:57:50 by cudoh            ###   ########.fr       */
+/*   Updated: 2022/12/22 23:00:52 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	ft_chk_option(char *arg, int *flag)
+{
+	size_t	len_arg;
+	size_t	idx;
+
+	len_arg = 0;
+	idx = 0;
+	if (arg == NULL)
+		return (-1);
+	len_arg = ft_strlen(arg);
+	if (len_arg < 2)
+		return (-2);
+	if (*arg != '-')
+		return (-2);
+	idx++;
+	while (idx < len_arg)
+	{
+		if (arg[idx] != 'n')
+			return (-2);
+		idx++;
+	}
+	*flag = 1;
+	return (0);
+}
+
+static int	ft_prnt_arg(t_cmd_exec *exe, int *idx, int *flag_ign, int *s_opt)
+{
+	if (*s_opt == 0)
+		return (0);
+	else if (*s_opt == -2)
+	{
+		*flag_ign = 1;
+		ft_printf("%s", ((exe->argv_s)[*idx]));
+		if ((exe->argv_s)[*idx + 1] != NULL)
+			write(1, " ", 1);
+	}
+	else if (*s_opt == -1)
+	{
+		return (-1);
+	}
+	return (0);
+}
+
 static int	ft_echo(t_cmd_exec *cmd_exec)
 {
 	int			check_n;
 	int			i;
+	int			status_opt_chk;
+	int			flag_ign;
 
 	i = 1;
 	check_n = 0;
-	while ((ft_strncmp((cmd_exec->argv_s)[i], "-n", ft_strlen("-n"))) == 0)
+	status_opt_chk = 0;
+	flag_ign = 0;
+	if (((cmd_exec->argv_s)[i]) == NULL)
 	{
-		if ((cmd_exec->argv_s)[i][ft_strlen("-n")] != '\0')
-			break ;
-		check_n = 1;
-		i++;
+		write(1, "\n", 1);
+		return (0);
 	}
 	while ((cmd_exec->argv_s)[i] != NULL)
 	{
-		ft_printf("%s", (cmd_exec->argv_s)[i]);
-		if ((cmd_exec->argv_s)[i + 1] != NULL)
-			write(1, " ", 1);
+		if (flag_ign == 0)
+			status_opt_chk = ft_chk_option(((cmd_exec->argv_s)[i]), &check_n);
+		if (ft_prnt_arg(cmd_exec, &i, &flag_ign, &status_opt_chk) < 0)
+			return (0);
 		i++;
 	}
 	if (check_n == 0)
